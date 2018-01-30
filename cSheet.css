@@ -1,0 +1,20 @@
+/* !important overules inline style in HMTL*/
+/* after puts a property after an object*/
+/* before puts a property before an object*/
+
+/* Panel */
+.panel:after,.panel:before{content:"";display:table;clear:both}
+.panel{padding:0.01em 1em}
+.panel{margin-top:1em;margin-bottom:1em}
+
+/* Panel content */
+.panel-title{font-family:"Verdana";font-size:1.125em;text-shadow: 1px 1px #000000}
+.panel-content{font-family:"Verdana";font-size: 0.9375em;text-shadow: 1px 1px #000000}
+
+/* Panel shadow */
+.card{box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)}
+
+/* Panel Background */
+.red{color:#fff!important;background-color:#ff1e1e!important}
+.green{color:#fff!important;background-color:#14ce00!important}
+.yellow{color:#fff!important;background-color:#fff000!important}
