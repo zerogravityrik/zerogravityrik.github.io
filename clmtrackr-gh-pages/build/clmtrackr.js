@@ -1,3 +1,9 @@
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.clm = factory());
+}(this, (function () { 'use strict';
+
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 
@@ -15309,4 +15315,6 @@ var clm = {
 	version : version
 };
 
-export default clm;
+return clm;
+
+})));
