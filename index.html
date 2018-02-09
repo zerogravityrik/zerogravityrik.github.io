@@ -9,21 +9,23 @@
 			body {
 				font-family: 'Lato';
 				background-color: #f0f0f0;
-				margin: 0px auto;
-				max-width: 1150px;
+				/*margin: 0px auto;*/
+				/*max-width: 1150px;*/
+				overflow: hidden;
+				margin: 0;
+				padding: 0;
 			}
 
 			#overlay, #webgl {
 				position: absolute;
 				top: 0px;
-				left: 0px;
 				-o-transform : scaleX(-1);
 				-webkit-transform : scaleX(-1);
 				transform : scaleX(-1);
 				-ms-filter : fliph; /*IE*/
 				filter : fliph; /*IE*/
-
-				
+				width: 100%;
+				height: auto;
 			}
 
 			#videoel {
@@ -32,24 +34,17 @@
 				transform : scaleX(-1);
 				-ms-filter : fliph; /*IE*/
 				filter : fliph; /*IE*/
-
-			
+				width: 100%;
+				height: auto;
 			}
 
 			#container {
-				position : relative;
-				width : 370px;
+				margin: auto;
+				width: 100%;
 			}
 
 			#content {
-				margin-top : 50px;
-				margin-left : auto;
-				margin-right : auto;
-				max-width: 600px;
-			}
-
-			h2 {
-				font-weight : 400;
+				/*max-width: 600px;*/
 			}
 
 			.btn {
@@ -91,26 +86,26 @@
 	</head>
 	<body onload="startVideo()">
 
-		<script src="clmtrackr-gh-pages/examples/js/libs/dat.gui.min.js"></script>
-		<script src="clmtrackr-gh-pages/examples/js/libs/utils.js"></script>
-		<script src="clmtrackr-gh-pages/examples/js/libs/webgl-utils.js"></script>
-		<script src="clmtrackr-gh-pages/build/clmtrackr.js"></script>
-		<script src="clmtrackr-gh-pages/models/model_pca_20_svm.js"></script>
-		<script src="clmtrackr-gh-pages/examples/js/libs/Stats.js"></script>
-		<script src="clmtrackr-gh-pages/examples/js/face_deformer.js"></script>
-		<script src="clmtrackr-gh-pages/examples/js/libs/jquery.min.js"></script>
-		<script src="clmtrackr-gh-pages/examples/js/libs/poisson_new.js"></script>
+		<script src="./js/libs/dat.gui.min.js"></script>
+		<script src="./js/libs/utils.js"></script>
+		<script src="./js/libs/webgl-utils.js"></script>
+		<script src="../build/clmtrackr.js"></script>
+		<script src="../models/model_pca_20_svm.js"></script>
+		<script src="./js/libs/Stats.js"></script>
+		<script src="./js/face_deformer.js"></script>
+		<script src="./js/libs/jquery.min.js"></script>
+		<script src="./js/libs/poisson_new.js"></script>
 
 		<div id="content">
-			<h2>Truthful Vending Machine</h2>
+			<!-- <h2>Truthful Vending Machine</h2> -->
 			<div id="container">
-				<video id="videoel" width="800" height="600" preload="auto" loop playsinline autoplay>
+				<video id="videoel" width="1000" height="800" preload="auto" loop playsinline autoplay>
 				</video>
-				<canvas id="overlay" width="800" height="600"></canvas>
-				<canvas id="webgl" width="800" height="600"></canvas>
+				<canvas id="overlay" width="1000" height="800"></canvas>
+				<canvas id="webgl" width="1000" height="800"></canvas>
 			</div>
 			<br/>
-			<div id="controls">
+<!-- 			<div id="controls">
 				<select name="deformation" id="deform">
 					<option value="beCreative">BeCreative</option>
 					<option value="unwell">Unwell</option>
@@ -127,11 +122,14 @@
 				</select>
 				<p class="sublabel">Facedeform preset</p>
 
-			</div>
+			</div> -->
 
 			<script>
-				// when everything is ready, automatically start everything ?
+				//Scaling variables
+				var screenw = (window.width - 1000)/2;
+				var screenl = (window.length - 800)/2;
 
+				// when everything is ready, automatically start everything ?
 				var vid = document.getElementById('videoel');
 				var vid_width = vid.width;
 				var vid_height = vid.height;
@@ -152,8 +150,8 @@
 				function enablestart() {
 					if (videoReady && imagesReady) {
 						var startbutton = document.getElementById('startbutton');
-						startbutton.value = "start";
-						startbutton.disabled = null;
+						//startbutton.value = "start";
+						//startbutton.disabled = null;
 					}
 				}
 
@@ -386,7 +384,7 @@
 							parameters[i] += ph['component '+(i-3)];
 						}
 						parameters[6] += 7+ 7 * Math.sin(window.performance.now() / 200);
-						parameters[7] += 7+ 7 * Math.cos(window.performance.now() / 200);
+						parameters[7] += 4+ 4 * Math.sin(window.performance.now() / 200);
 
 						positions = ctrack.calculatePositions(parameters);
 
@@ -412,7 +410,7 @@
 				};
 
 				var ph = new parameterHolder();
-				var gui = new dat.GUI();
+				//var gui = new dat.GUI();
 
 				var presets = {
 					"becreative" : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -433,7 +431,7 @@
 				var eig = 0;
 				for (var i = 0;i < pnums;i++) {
 					eig = Math.sqrt(pModel.shapeModel.eigenValues[i+2])*3
-					control['c'+(i+3)] = gui.add(ph, 'component '+(i+3), -5*eig, 5*eig).listen();
+					//control['c'+(i+3)] = gui.add(ph, 'component '+(i+3), -5*eig, 5*eig).listen();
 				}
 
 				/********** defaults code **********/
@@ -445,11 +443,11 @@
 					}
 				}
 
-				document.getElementById('deform').addEventListener('change', switchDeformedFace, false);
+				//document.getElementById('deform').addEventListener('change', switchDeformedFace, false);
 
-				for (var i = 0;i < pnums;i++) {
-					ph['component '+(i+3)] = presets['becreative'][i];
-				}
+				// for (var i = 0;i < pnums;i++) {
+				// 	ph['component '+(i+3)] = presets['beCreative'][i];
+				// }
 			</script>
 		</div>
 	</body>
